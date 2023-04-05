@@ -11,13 +11,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import jp.co.yumemi.android.code_check.databinding.FragmentOneBinding
 
+/**
+* repositoryを検索する画面
+ */
 class OneFragment : Fragment(R.layout.fragment_one) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val binding = FragmentOneBinding.bind(view)
-
         val viewModel = OneViewModel(context!!)
 
         val layoutManager = LinearLayoutManager(context!!)
@@ -28,6 +30,7 @@ class OneFragment : Fragment(R.layout.fragment_one) {
             }
         })
 
+        // searchInputTextのエディターアクションがIME_ACTION_SEARCHの場合、入力された文字列を使って検索し、結果をRecyclerViewに設定する
         binding.searchInputText.setOnEditorActionListener { editText, action, _ ->
             if (action == EditorInfo.IME_ACTION_SEARCH) {
                 editText.text.toString().let {
@@ -40,6 +43,7 @@ class OneFragment : Fragment(R.layout.fragment_one) {
             return@setOnEditorActionListener false
         }
 
+        // recyclerViewにlayoutManager、dividerItemDecoration、adapterを設定
         binding.recyclerView.also {
             it.layoutManager = layoutManager
             it.addItemDecoration(dividerItemDecoration)
@@ -47,6 +51,7 @@ class OneFragment : Fragment(R.layout.fragment_one) {
         }
     }
 
+    // TwoFragmentへ遷移
     fun gotoRepositoryFragment(item: Item) {
         val action =
             OneFragmentDirections.actionRepositoriesFragmentToRepositoryFragment(item = item)
@@ -55,10 +60,12 @@ class OneFragment : Fragment(R.layout.fragment_one) {
 }
 
 val diff_util = object : DiffUtil.ItemCallback<Item>() {
+    // Itemのnameが同じならtrue
     override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
         return oldItem.name == newItem.name
     }
 
+    // Itemが同じならtrue
     override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
         return oldItem == newItem
     }
