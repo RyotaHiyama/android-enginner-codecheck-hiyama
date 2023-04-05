@@ -12,6 +12,9 @@ import coil.load
 import jp.co.yumemi.android.code_check.TopActivity.Companion.lastSearchDate
 import jp.co.yumemi.android.code_check.databinding.FragmentTwoBinding
 
+/**
+ * 選択したrepositoryの情報を表示する画面
+ */
 class TwoFragment : Fragment(R.layout.fragment_two) {
 
     private val args: TwoFragmentArgs by navArgs()
@@ -28,6 +31,7 @@ class TwoFragment : Fragment(R.layout.fragment_two) {
 
         var item = args.item
 
+        // fragment_twoの各Viewにitemの情報を設定
         _binding.ownerIconView.load(item.ownerIconUrl);
         _binding.nameView.text = item.name;
         _binding.languageView.text = item.language;
