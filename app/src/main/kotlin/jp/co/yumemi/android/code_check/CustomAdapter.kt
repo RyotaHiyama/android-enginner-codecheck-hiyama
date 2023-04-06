@@ -1,7 +1,6 @@
 package jp.co.yumemi.android.code_check
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
@@ -22,7 +21,7 @@ class CustomAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         // ViewHolderのTextViewにitemのnameを設定する
-        (holder.itemView.findViewById<View>(R.id.repositoryNameView) as TextView).text = item.name
+        holder.itemView.findViewById<TextView>(R.id.repositoryNameView)?.text = item.name
         holder.itemView.setOnClickListener {
             itemClickListener.itemClick(item)
         }

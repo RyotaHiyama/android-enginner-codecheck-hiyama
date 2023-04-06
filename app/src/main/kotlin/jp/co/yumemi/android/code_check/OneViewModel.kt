@@ -31,41 +31,41 @@ class OneViewModel(
         val client = HttpClient(Android)
 
         return@runBlocking GlobalScope.async {
-            val response: HttpResponse = client?.get("https://api.github.com/search/repositories") {
+            val response: HttpResponse = client.get("https://api.github.com/search/repositories") {
                 header("Accept", "application/vnd.github.v3+json")
                 parameter("q", inputText)
             }
 
             val jsonBody = JSONObject(response.receive<String>())
 
-            val jsonItems = jsonBody.optJSONArray("items")!!
+            val jsonItems = jsonBody.optJSONArray("items")
 
             val items = mutableListOf<Item>()
 
-            /**
-             * アイテムの個数分ループする
-             */
-            for (i in 0 until jsonItems.length()) {
-                val jsonItem = jsonItems.optJSONObject(i)!!
-                val name = jsonItem.optString("full_name")
-                val ownerIconUrl = jsonItem.optJSONObject("owner")!!.optString("avatar_url")
-                val language = jsonItem.optString("language")
-                val stargazersCount = jsonItem.optLong("stargazers_count")
-                val watchersCount = jsonItem.optLong("watchers_count")
-                val forksCount = jsonItem.optLong("forks_conut")
-                val openIssuesCount = jsonItem.optLong("open_issues_count")
+            // アイテムの個数分ループする
+            if (jsonItems != null) {
+                for (i in 0 until jsonItems.length()) {
+                    val jsonItem = jsonItems.optJSONObject(i)
+                    val name = jsonItem?.optString("full_name") ?: "no name"
+                    val ownerIconUrl = jsonItem?.optJSONObject("owner")?.optString("avatar_url") ?: "no owner"
+                    val language = jsonItem?.optString("language") ?: "no language"
+                    val stargazersCount = jsonItem?.optLong("stargazers_count") ?: 0
+                    val watchersCount = jsonItem?.optLong("watchers_count") ?: 0
+                    val forksCount = jsonItem?.optLong("forks_conut") ?: 0
+                    val openIssuesCount = jsonItem?.optLong("open_issues_count") ?: 0
 
-                items.add(
-                    Item(
-                        name = name,
-                        ownerIconUrl = ownerIconUrl,
-                        language = context.getString(R.string.written_language, language),
-                        stargazersCount = stargazersCount,
-                        watchersCount = watchersCount,
-                        forksCount = forksCount,
-                        openIssuesCount = openIssuesCount
+                    items.add(
+                        Item(
+                            name = name,
+                            ownerIconUrl = ownerIconUrl,
+                            language = context.getString(R.string.written_language, language),
+                            stargazersCount = stargazersCount,
+                            watchersCount = watchersCount,
+                            forksCount = forksCount,
+                            openIssuesCount = openIssuesCount
+                        )
                     )
-                )
+                }
             }
 
             lastSearchDate = Date()
