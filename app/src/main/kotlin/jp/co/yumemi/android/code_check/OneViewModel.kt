@@ -42,19 +42,17 @@ class OneViewModel(
 
             val items = mutableListOf<Item>()
 
-            /**
-             * アイテムの個数分ループする
-             */
+            // アイテムの個数分ループする
             if (jsonItems != null) {
                 for (i in 0 until jsonItems.length()) {
                     val jsonItem = jsonItems.optJSONObject(i)
-                    val name = jsonItem.optString("full_name")
-                    val ownerIconUrl = jsonItem.optJSONObject("owner")?.optString("avatar_url") ?: "no owner"
-                    val language = jsonItem.optString("language")
-                    val stargazersCount = jsonItem.optLong("stargazers_count")
-                    val watchersCount = jsonItem.optLong("watchers_count")
-                    val forksCount = jsonItem.optLong("forks_conut")
-                    val openIssuesCount = jsonItem.optLong("open_issues_count")
+                    val name = jsonItem?.optString("full_name") ?: "no name"
+                    val ownerIconUrl = jsonItem?.optJSONObject("owner")?.optString("avatar_url") ?: "no owner"
+                    val language = jsonItem?.optString("language") ?: "no language"
+                    val stargazersCount = jsonItem?.optLong("stargazers_count") ?: 0
+                    val watchersCount = jsonItem?.optLong("watchers_count") ?: 0
+                    val forksCount = jsonItem?.optLong("forks_conut") ?: 0
+                    val openIssuesCount = jsonItem?.optLong("open_issues_count") ?: 0
 
                     items.add(
                         Item(
