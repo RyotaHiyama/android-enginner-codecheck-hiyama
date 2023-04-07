@@ -19,25 +19,31 @@ class TwoFragment : Fragment(R.layout.fragment_two) {
 
     private val args: TwoFragmentArgs by navArgs()
 
-    private var binding: FragmentTwoBinding? = null
-    private val _binding get() = binding!!
+    private var _binding: FragmentTwoBinding? = null
+    private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         Log.d("検索した日時", lastSearchDate.toString())
 
-        binding = FragmentTwoBinding.bind(view)
+        _binding = FragmentTwoBinding.bind(view)
 
-        var item = args.item
+        val item = args.item
 
         // fragment_twoの各Viewにitemの情報を設定
-        _binding.ownerIconView.load(item.ownerIconUrl);
-        _binding.nameView.text = item.name;
-        _binding.languageView.text = item.language;
-        _binding.starsView.text = "${item.stargazersCount} stars";
-        _binding.watchersView.text = "${item.watchersCount} watchers";
-        _binding.forksView.text = "${item.forksCount} forks";
-        _binding.openIssuesView.text = "${item.openIssuesCount} open issues";
+        binding.ownerIconView.load(item.ownerIconUrl)
+        binding.nameView.text = item.name
+        binding.languageView.text = item.language
+        binding.starsView.text = getString(R.string.count_stars, item.stargazersCount)
+        binding.watchersView.text = getString(R.string.count_watchers ,item.watchersCount)
+        binding.forksView.text = getString(R.string.count_forks, item.forksCount)
+        binding.openIssuesView.text = getString(R.string.open_issues, item.openIssuesCount)
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 }
