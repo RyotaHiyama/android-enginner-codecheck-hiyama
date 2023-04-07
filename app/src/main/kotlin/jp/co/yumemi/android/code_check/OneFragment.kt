@@ -32,7 +32,7 @@ class OneFragment : Fragment(R.layout.fragment_one) {
 
         // searchInputTextのエディターアクションがIME_ACTION_SEARCHの場合、入力された文字列を使って検索し、結果をRecyclerViewに設定する
         binding.searchInputText.setOnEditorActionListener { editText, action, _ ->
-            if (action == EditorInfo.IME_ACTION_SEARCH) {
+            if (action == EditorInfo.IME_ACTION_SEARCH && editText.text.toString() != "") {
                 editText.text.toString().let {
                     viewModel.searchResults(it).apply {
                         adapter.submitList(this)
