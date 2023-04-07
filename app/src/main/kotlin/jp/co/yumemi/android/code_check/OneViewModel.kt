@@ -51,7 +51,7 @@ class OneViewModel(
                     val language = jsonItem?.optString("language") ?: "no language"
                     val stargazersCount = jsonItem?.optLong("stargazers_count") ?: 0
                     val watchersCount = jsonItem?.optLong("watchers_count") ?: 0
-                    val forksCount = jsonItem?.optLong("forks_conut") ?: 0
+                    val forksCount = jsonItem?.optLong("forks_count") ?: 0
                     val openIssuesCount = jsonItem?.optLong("open_issues_count") ?: 0
 
                     items.add(
