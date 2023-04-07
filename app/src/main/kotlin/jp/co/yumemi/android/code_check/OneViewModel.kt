@@ -12,9 +12,6 @@ import io.ktor.client.engine.android.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import jp.co.yumemi.android.code_check.TopActivity.Companion.lastSearchDate
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
 import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
 import java.util.*
@@ -27,51 +24,47 @@ class OneViewModel(
 ) : ViewModel() {
 
     // 検索結果
-    fun searchResults(inputText: String): List<Item> = runBlocking {
+    suspend fun searchResults(inputText: String): List<Item> {
         val client = HttpClient(Android)
 
-        return@runBlocking GlobalScope.async {
-            val response: HttpResponse = client.get("https://api.github.com/search/repositories") {
-                header("Accept", "application/vnd.github.v3+json")
-                parameter("q", inputText)
-            }
+        val response: HttpResponse = client.get("https://api.github.com/search/repositories") {
+            header("Accept", "application/vnd.github.v3+json")
+            parameter("q", inputText)
+        }
+        val jsonBody = JSONObject(response.receive<String>())
 
-            val jsonBody = JSONObject(response.receive<String>())
+        val jsonItems = jsonBody.optJSONArray("items")
 
-            val jsonItems = jsonBody.optJSONArray("items")
+        val items = mutableListOf<Item>()
 
-            val items = mutableListOf<Item>()
+        // アイテムの個数分ループする
+        if (jsonItems != null) {
+            for (i in 0 until jsonItems.length()) {
+                val jsonItem = jsonItems.optJSONObject(i)
+                val name = jsonItem?.optString("full_name") ?: "no name"
+                val ownerIconUrl =
+                    jsonItem?.optJSONObject("owner")?.optString("avatar_url") ?: "no owner"
+                val language = jsonItem?.optString("language") ?: "no language"
+                val stargazersCount = jsonItem?.optLong("stargazers_count") ?: 0
+                val watchersCount = jsonItem?.optLong("watchers_count") ?: 0
+                val forksCount = jsonItem?.optLong("forks_count") ?: 0
+                val openIssuesCount = jsonItem?.optLong("open_issues_count") ?: 0
 
-            // アイテムの個数分ループする
-            if (jsonItems != null) {
-                for (i in 0 until jsonItems.length()) {
-                    val jsonItem = jsonItems.optJSONObject(i)
-                    val name = jsonItem?.optString("full_name") ?: "no name"
-                    val ownerIconUrl = jsonItem?.optJSONObject("owner")?.optString("avatar_url") ?: "no owner"
-                    val language = jsonItem?.optString("language") ?: "no language"
-                    val stargazersCount = jsonItem?.optLong("stargazers_count") ?: 0
-                    val watchersCount = jsonItem?.optLong("watchers_count") ?: 0
-                    val forksCount = jsonItem?.optLong("forks_count") ?: 0
-                    val openIssuesCount = jsonItem?.optLong("open_issues_count") ?: 0
-
-                    items.add(
-                        Item(
-                            name = name,
-                            ownerIconUrl = ownerIconUrl,
-                            language = app.getString(R.string.written_language, language),
-                            stargazersCount = stargazersCount,
-                            watchersCount = watchersCount,
-                            forksCount = forksCount,
-                            openIssuesCount = openIssuesCount
-                        )
+                items.add(
+                    Item(
+                        name = name,
+                        ownerIconUrl = ownerIconUrl,
+                        language = app.getString(R.string.written_language, language),
+                        stargazersCount = stargazersCount,
+                        watchersCount = watchersCount,
+                        forksCount = forksCount,
+                        openIssuesCount = openIssuesCount
                     )
-                }
+                )
             }
-
-            lastSearchDate = Date()
-
-            return@async items.toList()
-        }.await()
+        }
+        lastSearchDate = Date()
+        return items.toList()
     }
 }
 

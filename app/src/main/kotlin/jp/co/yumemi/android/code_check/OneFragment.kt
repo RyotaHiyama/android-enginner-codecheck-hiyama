@@ -8,9 +8,11 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import jp.co.yumemi.android.code_check.databinding.FragmentOneBinding
+import kotlinx.coroutines.launch
 
 /**
 * repositoryを検索する画面
@@ -37,8 +39,10 @@ class OneFragment : Fragment(R.layout.fragment_one) {
         binding.searchInputText.setOnEditorActionListener { editText, action, _ ->
             if (action == EditorInfo.IME_ACTION_SEARCH && editText.text.toString() != "") {
                 editText.text.toString().let {
-                    viewModel.searchResults(it).apply {
-                        adapter.submitList(this)
+                    viewLifecycleOwner.lifecycleScope.launch{
+                        viewModel.searchResults(it).apply {
+                            adapter.submitList(this)
+                        }
                     }
                 }
                 return@setOnEditorActionListener true
