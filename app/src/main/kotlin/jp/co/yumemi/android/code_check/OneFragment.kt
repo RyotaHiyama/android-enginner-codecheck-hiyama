@@ -6,6 +6,7 @@ package jp.co.yumemi.android.code_check
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -40,8 +41,10 @@ class OneFragment : Fragment(R.layout.fragment_one) {
             if (action == EditorInfo.IME_ACTION_SEARCH && editText.text.toString() != "") {
                 editText.text.toString().let {
                     viewLifecycleOwner.lifecycleScope.launch{
-                        viewModel.searchResults(it).apply {
-                            adapter.submitList(this)
+                        try {
+                            adapter.submitList(viewModel.searchResults(it))
+                        } catch (e: Exception){
+                            Toast.makeText(activity, "検索中に予期せぬエラーが発生しました。やり直してください。", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

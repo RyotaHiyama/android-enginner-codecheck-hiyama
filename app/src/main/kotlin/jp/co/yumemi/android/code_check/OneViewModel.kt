@@ -5,6 +5,7 @@ package jp.co.yumemi.android.code_check
 
 import android.app.Application
 import android.os.Parcelable
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import io.ktor.client.*
 import io.ktor.client.call.*
@@ -25,45 +26,49 @@ class OneViewModel(
 
     // 検索結果
     suspend fun searchResults(inputText: String): List<Item> {
-        val client = HttpClient(Android)
-
-        val response: HttpResponse = client.get("https://api.github.com/search/repositories") {
-            header("Accept", "application/vnd.github.v3+json")
-            parameter("q", inputText)
-        }
-        val jsonBody = JSONObject(response.receive<String>())
-
-        val jsonItems = jsonBody.optJSONArray("items")
-
         val items = mutableListOf<Item>()
+        try {
+            val client = HttpClient(Android)
 
-        // アイテムの個数分ループする
-        if (jsonItems != null) {
-            for (i in 0 until jsonItems.length()) {
-                val jsonItem = jsonItems.optJSONObject(i)
-                val name = jsonItem?.optString("full_name") ?: "no name"
-                val ownerIconUrl =
-                    jsonItem?.optJSONObject("owner")?.optString("avatar_url") ?: "no owner"
-                val language = jsonItem?.optString("language") ?: "no language"
-                val stargazersCount = jsonItem?.optLong("stargazers_count") ?: 0
-                val watchersCount = jsonItem?.optLong("watchers_count") ?: 0
-                val forksCount = jsonItem?.optLong("forks_count") ?: 0
-                val openIssuesCount = jsonItem?.optLong("open_issues_count") ?: 0
-
-                items.add(
-                    Item(
-                        name = name,
-                        ownerIconUrl = ownerIconUrl,
-                        language = app.getString(R.string.written_language, language),
-                        stargazersCount = stargazersCount,
-                        watchersCount = watchersCount,
-                        forksCount = forksCount,
-                        openIssuesCount = openIssuesCount
-                    )
-                )
+            val response: HttpResponse = client.get("https://api.github.com/search/repositories") {
+                header("Accept", "application/vnd.github.v3+json")
+                parameter("q", inputText)
             }
+            Log.i("res", response.toString())
+            val jsonBody = JSONObject(response.receive<String>())
+
+            val jsonItems = jsonBody.optJSONArray("items")
+
+            // アイテムの個数分ループする
+            if (jsonItems != null) {
+                for (i in 0 until jsonItems.length()) {
+                    val jsonItem = jsonItems.optJSONObject(i)
+                    val name = jsonItem?.optString("full_name") ?: "no name"
+                    val ownerIconUrl =
+                        jsonItem?.optJSONObject("owner")?.optString("avatar_url") ?: "no owner"
+                    val language = jsonItem?.optString("language") ?: "no language"
+                    val stargazersCount = jsonItem?.optLong("stargazers_count") ?: 0
+                    val watchersCount = jsonItem?.optLong("watchers_count") ?: 0
+                    val forksCount = jsonItem?.optLong("forks_count") ?: 0
+                    val openIssuesCount = jsonItem?.optLong("open_issues_count") ?: 0
+
+                    items.add(
+                        Item(
+                            name = name,
+                            ownerIconUrl = ownerIconUrl,
+                            language = app.getString(R.string.written_language, language),
+                            stargazersCount = stargazersCount,
+                            watchersCount = watchersCount,
+                            forksCount = forksCount,
+                            openIssuesCount = openIssuesCount
+                        )
+                    )
+                }
+            }
+            lastSearchDate = Date()
+        } catch (e: Exception) {
+            throw Exception("Error in searchResults(): ${e.message}")
         }
-        lastSearchDate = Date()
         return items.toList()
     }
 }
