@@ -3,7 +3,7 @@
  */
 package jp.co.yumemi.android.code_check
 
-import android.content.Context
+import android.app.Application
 import android.os.Parcelable
 import androidx.lifecycle.ViewModel
 import io.ktor.client.*
@@ -23,7 +23,7 @@ import java.util.*
  * OneFragment で使う
  */
 class OneViewModel(
-    val context: Context
+    val app: Application
 ) : ViewModel() {
 
     // 検索結果
@@ -58,7 +58,7 @@ class OneViewModel(
                         Item(
                             name = name,
                             ownerIconUrl = ownerIconUrl,
-                            language = context.getString(R.string.written_language, language),
+                            language = app.getString(R.string.written_language, language),
                             stargazersCount = stargazersCount,
                             watchersCount = watchersCount,
                             forksCount = forksCount,
