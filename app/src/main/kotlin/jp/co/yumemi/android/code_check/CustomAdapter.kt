@@ -3,6 +3,7 @@ package jp.co.yumemi.android.code_check
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 
 class CustomAdapter(
@@ -26,4 +27,17 @@ class CustomAdapter(
             itemClickListener.itemClick(item)
         }
     }
+}
+
+val diff_util = object : DiffUtil.ItemCallback<Item>() {
+    // Itemのnameが同じならtrue
+    override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
+        return oldItem.name == newItem.name
+    }
+
+    // Itemが同じならtrue
+    override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
+        return oldItem == newItem
+    }
+
 }

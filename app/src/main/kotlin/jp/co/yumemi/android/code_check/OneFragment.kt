@@ -68,16 +68,3 @@ class OneFragment : Fragment(R.layout.fragment_one) {
         findNavController().navigate(action)
     }
 }
-
-val diff_util = object : DiffUtil.ItemCallback<Item>() {
-    // Itemのnameが同じならtrue
-    override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
-        return oldItem.name == newItem.name
-    }
-
-    // Itemが同じならtrue
-    override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
-        return oldItem == newItem
-    }
-
-}
