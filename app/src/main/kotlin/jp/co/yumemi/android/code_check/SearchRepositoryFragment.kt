@@ -26,7 +26,7 @@ class SearchRepositoryFragment : Fragment(R.layout.fragment_search_repository) {
         val binding = FragmentSearchRepositoryBinding.bind(view)
         val application = requireNotNull(this.activity).application
         val viewModelFactory = SearchRepositoryViewModelFactory(application)
-        val viewModel = ViewModelProvider(this, viewModelFactory)[OneViewModel::class.java]
+        val viewModel = ViewModelProvider(this, viewModelFactory)[SearchRepositoryViewModel::class.java]
 
         val layoutManager = LinearLayoutManager(requireContext())
         val dividerItemDecoration = DividerItemDecoration(requireContext(), layoutManager.orientation)

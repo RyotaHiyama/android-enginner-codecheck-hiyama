@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModelProvider
 class SearchRepositoryViewModelFactory(private val app: Application): ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(OneViewModel::class.java)){
-            return OneViewModel(app) as T
+        if (modelClass.isAssignableFrom(SearchRepositoryViewModel::class.java)){
+            return SearchRepositoryViewModel(app) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
