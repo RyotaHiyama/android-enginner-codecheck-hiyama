@@ -12,20 +12,20 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
-import jp.co.yumemi.android.code_check.databinding.FragmentOneBinding
+import jp.co.yumemi.android.code_check.databinding.FragmentSearchRepositoryBinding
 import kotlinx.coroutines.launch
 
 /**
 * repositoryを検索する画面
  */
-class OneFragment : Fragment(R.layout.fragment_one) {
+class SearchRepositoryFragment : Fragment(R.layout.fragment_search_repository) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val binding = FragmentOneBinding.bind(view)
+        val binding = FragmentSearchRepositoryBinding.bind(view)
         val application = requireNotNull(this.activity).application
-        val viewModelFactory = OneViewModelFactory(application)
+        val viewModelFactory = SearchRepositoryViewModelFactory(application)
         val viewModel = ViewModelProvider(this, viewModelFactory)[OneViewModel::class.java]
 
         val layoutManager = LinearLayoutManager(requireContext())
@@ -64,7 +64,7 @@ class OneFragment : Fragment(R.layout.fragment_one) {
     // TwoFragmentへ遷移
     fun gotoRepositoryFragment(item: Item) {
         val action =
-            OneFragmentDirections.actionRepositoriesFragmentToRepositoryFragment(item = item)
+            SearchRepositoryFragmentDirections.actionRepositoriesFragmentToRepositoryFragment(item = item)
         findNavController().navigate(action)
     }
 }
