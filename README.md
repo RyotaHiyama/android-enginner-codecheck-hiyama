@@ -51,7 +51,7 @@ Issues を確認した上、本プロジェクトを [**Duplicate** してくだ
 コミットメッセージには最初にprefixを書いています。以下はprefix一覧です。
 * add: 新規ファイル追加
 * remove：ファイル削除
-update：機能修正
+* update：機能修正
 * feat: 新しい機能
 * fix: バグの修正
 * docs: ドキュメントのみの変更
