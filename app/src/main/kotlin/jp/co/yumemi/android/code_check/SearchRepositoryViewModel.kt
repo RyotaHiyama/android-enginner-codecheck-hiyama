@@ -20,7 +20,7 @@ import java.util.*
 /**
  * OneFragment で使う
  */
-class OneViewModel(
+class SearchRepositoryViewModel(
     val app: Application
 ) : ViewModel() {
 
