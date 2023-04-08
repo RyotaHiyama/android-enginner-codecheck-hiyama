@@ -4,7 +4,6 @@
 package jp.co.yumemi.android.code_check
 
 import android.app.Application
-import android.os.Parcelable
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import io.ktor.client.*
@@ -15,7 +14,6 @@ import io.ktor.client.statement.*
 import jp.co.yumemi.android.code_check.TopActivity.Companion.lastSearchDate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
 import java.util.*
 
@@ -74,14 +72,3 @@ class OneViewModel(
         return@withContext items.toList()
     }
 }
-
-@Parcelize
-data class Item(
-    val name: String,
-    val ownerIconUrl: String,
-    val language: String,
-    val stargazersCount: Long,
-    val watchersCount: Long,
-    val forksCount: Long,
-    val openIssuesCount: Long,
-) : Parcelable
