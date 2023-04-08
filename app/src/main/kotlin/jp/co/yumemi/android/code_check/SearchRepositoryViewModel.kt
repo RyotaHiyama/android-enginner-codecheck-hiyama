@@ -6,11 +6,7 @@ package jp.co.yumemi.android.code_check
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import io.ktor.client.*
 import io.ktor.client.call.*
-import io.ktor.client.engine.android.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
 import jp.co.yumemi.android.code_check.TopActivity.Companion.lastSearchDate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -24,16 +20,14 @@ class SearchRepositoryViewModel(
     val app: Application
 ) : ViewModel() {
 
+    private val repository = Repository()
+
+
     // 検索結果
     suspend fun searchResults(inputText: String): List<Item> = withContext(Dispatchers.IO) {
         val items = mutableListOf<Item>()
         try {
-            val client = HttpClient(Android)
-
-            val response: HttpResponse = client.get("https://api.github.com/search/repositories") {
-                header("Accept", "application/vnd.github.v3+json")
-                parameter("q", inputText)
-            }
+            val response = repository.search(inputText)
             Log.i("res", response.toString())
             val jsonBody = JSONObject(response.receive<String>())
 
