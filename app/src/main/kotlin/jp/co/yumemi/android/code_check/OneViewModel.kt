@@ -13,6 +13,8 @@ import io.ktor.client.engine.android.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import jp.co.yumemi.android.code_check.TopActivity.Companion.lastSearchDate
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
 import java.util.*
@@ -25,7 +27,7 @@ class OneViewModel(
 ) : ViewModel() {
 
     // 検索結果
-    suspend fun searchResults(inputText: String): List<Item> {
+    suspend fun searchResults(inputText: String): List<Item> = withContext(Dispatchers.IO) {
         val items = mutableListOf<Item>()
         try {
             val client = HttpClient(Android)
@@ -69,7 +71,7 @@ class OneViewModel(
         } catch (e: Exception) {
             throw Exception("Error in searchResults(): ${e.message}")
         }
-        return items.toList()
+        return@withContext items.toList()
     }
 }
 

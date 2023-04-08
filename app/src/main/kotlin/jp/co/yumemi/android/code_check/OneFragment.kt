@@ -9,7 +9,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import jp.co.yumemi.android.code_check.databinding.FragmentOneBinding
@@ -40,7 +40,7 @@ class OneFragment : Fragment(R.layout.fragment_one) {
         binding.searchInputText.setOnEditorActionListener { editText, action, _ ->
             if (action == EditorInfo.IME_ACTION_SEARCH && editText.text.toString() != "") {
                 editText.text.toString().let {
-                    viewLifecycleOwner.lifecycleScope.launch{
+                    viewModel.viewModelScope.launch{
                         try {
                             adapter.submitList(viewModel.searchResults(it))
                         } catch (e: Exception){
@@ -67,17 +67,4 @@ class OneFragment : Fragment(R.layout.fragment_one) {
             OneFragmentDirections.actionRepositoriesFragmentToRepositoryFragment(item = item)
         findNavController().navigate(action)
     }
-}
-
-val diff_util = object : DiffUtil.ItemCallback<Item>() {
-    // Itemのnameが同じならtrue
-    override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
-        return oldItem.name == newItem.name
-    }
-
-    // Itemが同じならtrue
-    override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
-        return oldItem == newItem
-    }
-
 }
