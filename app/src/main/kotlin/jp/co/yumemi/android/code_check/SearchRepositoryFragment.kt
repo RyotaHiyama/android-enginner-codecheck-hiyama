@@ -4,9 +4,12 @@
 package jp.co.yumemi.android.code_check
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -18,12 +21,21 @@ import kotlinx.coroutines.launch
 /**
 * repositoryを検索する画面
  */
-class SearchRepositoryFragment : Fragment(R.layout.fragment_search_repository) {
+class SearchRepositoryFragment : Fragment() {
+    private lateinit var binding: FragmentSearchRepositoryBinding
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_repository, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val binding = FragmentSearchRepositoryBinding.bind(view)
         val application = requireNotNull(this.activity).application
         val viewModelFactory = SearchRepositoryViewModelFactory(application)
         val viewModel = ViewModelProvider(this, viewModelFactory)[SearchRepositoryViewModel::class.java]
