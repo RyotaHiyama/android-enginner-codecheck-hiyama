@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 * repositoryを検索する画面
  */
 class SearchRepositoryFragment : Fragment() {
-    private lateinit var binding: FragmentSearchRepositoryBinding
+    private var binding: FragmentSearchRepositoryBinding? = null
     private lateinit var viewModel: SearchRepositoryViewModel
 
     override fun onCreateView(
@@ -33,9 +33,9 @@ class SearchRepositoryFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val viewModelFactory = SearchRepositoryViewModelFactory(application)
         viewModel = ViewModelProvider(this, viewModelFactory)[SearchRepositoryViewModel::class.java]
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = this
-        return binding.root
+        binding?.viewModel = viewModel
+        binding?.lifecycleOwner = this
+        return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,8 +50,8 @@ class SearchRepositoryFragment : Fragment() {
         })
 
         // 検索ボタンを押した時、入力された文字列を使って検索する
-        binding.searchButton.setOnClickListener {
-            val editText = binding.searchInputText.text.toString()
+        binding?.searchButton?.setOnClickListener {
+            val editText = binding?.searchInputText?.text.toString()
             if (editText != "") {
                 viewModel.viewModelScope.launch{
                     try {
@@ -79,10 +79,10 @@ class SearchRepositoryFragment : Fragment() {
         }
 
         // recyclerViewにlayoutManager、dividerItemDecoration、adapterを設定
-        binding.recyclerView.also {
-            it.layoutManager = layoutManager
-            it.addItemDecoration(dividerItemDecoration)
-            it.adapter = adapter
+        binding?.recyclerView.also {
+            it?.layoutManager = layoutManager
+            it?.addItemDecoration(dividerItemDecoration)
+            it?.adapter = adapter
         }
     }
 
@@ -91,5 +91,12 @@ class SearchRepositoryFragment : Fragment() {
         val action =
             SearchRepositoryFragmentDirections.actionRepositoriesFragmentToRepositoryFragment(item = item)
         findNavController().navigate(action)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.itemLive.removeObservers(viewLifecycleOwner)
+        viewModel.navigateToFragmentSearchUsers.removeObservers(viewLifecycleOwner)
+        binding = null
     }
 }
