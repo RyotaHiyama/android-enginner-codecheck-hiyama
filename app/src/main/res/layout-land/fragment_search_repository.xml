@@ -37,8 +37,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:startIconDrawable="@android:drawable/ic_menu_search"
-                app:startIconTint="@android:color/darker_gray">
+                app:startIconDrawable="@drawable/github_mark">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/searchInputText"
