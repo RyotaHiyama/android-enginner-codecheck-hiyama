@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -34,6 +33,7 @@ class SearchRepositoryFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_repository, container, false)
         val viewModelFactory = SearchRepositoryViewModelFactory(application)
         viewModel = ViewModelProvider(this, viewModelFactory)[SearchRepositoryViewModel::class.java]
+        binding.viewModel = viewModel
         return binding.root
     }
 
@@ -48,23 +48,21 @@ class SearchRepositoryFragment : Fragment() {
             }
         })
 
-        // searchInputTextのエディターアクションがIME_ACTION_SEARCHの場合、入力された文字列を使って検索し、結果をRecyclerViewに設定する
-        binding.searchInputText.setOnEditorActionListener { editText, action, _ ->
-            if (action == EditorInfo.IME_ACTION_SEARCH && editText.text.toString() != "") {
-                editText.text.toString().let {
-                    viewModel.viewModelScope.launch{
-                        try {
-                            viewModel.searchResults(it)
-                        } catch (e: Exception){
-                            Toast.makeText(activity, "検索中に予期せぬエラーが発生しました。やり直してください。", Toast.LENGTH_SHORT).show()
-                        }
+        // 検索ボタンを押した時、入力された文字列を使って検索する
+        binding.searchButton.setOnClickListener {
+            val editText = binding.searchInputText.text.toString()
+            if (editText != "") {
+                viewModel.viewModelScope.launch{
+                    try {
+                        viewModel.searchResults(editText)
+                    } catch (e: Exception){
+                        Toast.makeText(activity, "検索中に予期せぬエラーが発生しました。やり直してください。", Toast.LENGTH_SHORT).show()
                     }
                 }
-                return@setOnEditorActionListener true
             }
-            return@setOnEditorActionListener false
         }
 
+        // 検索結果を一覧表示
         viewModel.itemLive.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
