@@ -39,8 +39,6 @@ class RepositoryInfoFragment : Fragment() {
 
         Log.d("検索した日時", lastSearchDate.toString())
 
-//        _binding = FragmentRepositoryInfoBinding.bind(view)
-
         val item = args.item
 
         // fragment_twoの各Viewにitemの情報を設定
