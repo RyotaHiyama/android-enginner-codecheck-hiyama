@@ -42,7 +42,7 @@ class SearchRepositoryFragment : Fragment(R.layout.fragment_search_repository) {
                 editText.text.toString().let {
                     viewModel.viewModelScope.launch{
                         try {
-                            adapter.submitList(viewModel.searchResults(it))
+                            viewModel.searchResults(it)
                         } catch (e: Exception){
                             Toast.makeText(activity, "検索中に予期せぬエラーが発生しました。やり直してください。", Toast.LENGTH_SHORT).show()
                         }
@@ -51,6 +51,10 @@ class SearchRepositoryFragment : Fragment(R.layout.fragment_search_repository) {
                 return@setOnEditorActionListener true
             }
             return@setOnEditorActionListener false
+        }
+
+        viewModel.itemLive.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
         }
 
         // recyclerViewにlayoutManager、dividerItemDecoration、adapterを設定
