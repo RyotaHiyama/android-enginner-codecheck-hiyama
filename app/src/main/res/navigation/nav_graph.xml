@@ -34,5 +34,16 @@
         <action
             android:id="@+id/action_searchUsersFragment_to_searchRepositoryFragment"
             app:destination="@id/searchRepositoryFragment" />
+        <action
+            android:id="@+id/action_searchUsersFragment_to_userInfoFragment"
+            app:destination="@id/userInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userInfoFragment"
+        android:name="jp.co.yumemi.android.code_check.UserInfoFragment"
+        android:label="UserInfoFragment" >
+        <argument
+            android:name="user"
+            app:argType="jp.co.yumemi.android.code_check.User" />
     </fragment>
 </navigation>
