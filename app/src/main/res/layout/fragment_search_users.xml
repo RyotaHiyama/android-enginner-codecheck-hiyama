@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="jp.co.yumemi.android.code_check.SearchUsersViewModel" />
+            type="jp.co.yumemi.android.code_check.screens.searchuser.SearchUsersViewModel" />
 
     </data>
 
@@ -47,7 +47,7 @@
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
                     android:hint="@string/searchUsersInputText_hint"
-                    android:imeOptions="actionSearch"
+                    android:imeOptions="actionDone"
                     android:inputType="text"
                     android:textSize="12sp" />
 

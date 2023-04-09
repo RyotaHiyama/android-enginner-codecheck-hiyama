@@ -1,4 +1,4 @@
-package jp.co.yumemi.android.code_check
+package jp.co.yumemi.android.code_check.screens.searchrepo
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/searchRepositoryFragment"
-        android:name="jp.co.yumemi.android.code_check.SearchRepositoryFragment"
+        android:name="jp.co.yumemi.android.code_check.screens.searchrepo.SearchRepositoryFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_search_repository">
         <action
@@ -20,16 +20,16 @@
 
     <fragment
         android:id="@+id/repositoryInfoFragment"
-        android:name="jp.co.yumemi.android.code_check.RepositoryInfoFragment"
+        android:name="jp.co.yumemi.android.code_check.screens.repoinfo.RepositoryInfoFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_repository_info">
         <argument
             android:name="item"
-            app:argType="jp.co.yumemi.android.code_check.Item" />
+            app:argType="jp.co.yumemi.android.code_check.data.Item" />
     </fragment>
     <fragment
         android:id="@+id/searchUsersFragment"
-        android:name="jp.co.yumemi.android.code_check.SearchUsersFragment"
+        android:name="jp.co.yumemi.android.code_check.screens.searchuser.SearchUsersFragment"
         android:label="SearchUsersFragment" >
         <action
             android:id="@+id/action_searchUsersFragment_to_searchRepositoryFragment"
@@ -40,10 +40,10 @@
     </fragment>
     <fragment
         android:id="@+id/userInfoFragment"
-        android:name="jp.co.yumemi.android.code_check.UserInfoFragment"
+        android:name="jp.co.yumemi.android.code_check.screens.userinfo.UserInfoFragment"
         android:label="UserInfoFragment" >
         <argument
             android:name="user"
-            app:argType="jp.co.yumemi.android.code_check.User" />
+            app:argType="jp.co.yumemi.android.code_check.data.User" />
     </fragment>
 </navigation>

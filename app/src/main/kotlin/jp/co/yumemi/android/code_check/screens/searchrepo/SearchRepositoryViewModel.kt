@@ -1,7 +1,7 @@
 /*
  * Copyright © 2021 YUMEMI Inc. All rights reserved.
  */
-package jp.co.yumemi.android.code_check
+package jp.co.yumemi.android.code_check.screens.searchrepo
 
 import android.app.Application
 import android.util.Log
@@ -9,7 +9,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.ktor.client.call.*
+import jp.co.yumemi.android.code_check.R
+import jp.co.yumemi.android.code_check.Repository
 import jp.co.yumemi.android.code_check.TopActivity.Companion.lastSearchDate
+import jp.co.yumemi.android.code_check.data.Item
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject

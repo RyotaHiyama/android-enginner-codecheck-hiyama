@@ -1,10 +1,12 @@
-package jp.co.yumemi.android.code_check
+package jp.co.yumemi.android.code_check.screens.userinfo
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.ktor.client.call.*
+import jp.co.yumemi.android.code_check.Repository
+import jp.co.yumemi.android.code_check.TopActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject

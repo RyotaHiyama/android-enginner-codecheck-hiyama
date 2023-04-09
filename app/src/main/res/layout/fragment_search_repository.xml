@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="jp.co.yumemi.android.code_check.SearchRepositoryViewModel" />
+            type="jp.co.yumemi.android.code_check.screens.searchrepo.SearchRepositoryViewModel" />
 
     </data>
 

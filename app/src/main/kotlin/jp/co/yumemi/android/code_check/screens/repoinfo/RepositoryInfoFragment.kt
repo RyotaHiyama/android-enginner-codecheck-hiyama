@@ -1,7 +1,7 @@
 /*
  * Copyright © 2021 YUMEMI Inc. All rights reserved.
  */
-package jp.co.yumemi.android.code_check
+package jp.co.yumemi.android.code_check.screens.repoinfo
 
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import coil.load
+import jp.co.yumemi.android.code_check.R
 import jp.co.yumemi.android.code_check.TopActivity.Companion.lastSearchDate
 import jp.co.yumemi.android.code_check.databinding.FragmentRepositoryInfoBinding
 
@@ -29,7 +30,8 @@ class RepositoryInfoFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_repository_info, container, false)
+        binding = DataBindingUtil.inflate(inflater,
+            R.layout.fragment_repository_info, container, false)
         binding.lifecycleOwner = this
         return binding.root
     }
@@ -46,7 +48,7 @@ class RepositoryInfoFragment : Fragment() {
         binding.nameView.text = item.name
         binding.languageView.text = item.language
         binding.starsView.text = getString(R.string.count_stars, item.stargazersCount)
-        binding.watchersView.text = getString(R.string.count_watchers ,item.watchersCount)
+        binding.watchersView.text = getString(R.string.count_watchers,item.watchersCount)
         binding.forksView.text = getString(R.string.count_forks, item.forksCount)
         binding.openIssuesView.text = getString(R.string.open_issues, item.openIssuesCount)
     }

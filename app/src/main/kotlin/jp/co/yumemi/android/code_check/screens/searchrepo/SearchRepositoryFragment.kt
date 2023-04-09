@@ -1,7 +1,7 @@
 /*
  * Copyright © 2021 YUMEMI Inc. All rights reserved.
  */
-package jp.co.yumemi.android.code_check
+package jp.co.yumemi.android.code_check.screens.searchrepo
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +14,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
+import jp.co.yumemi.android.code_check.CustomAdapter
+import jp.co.yumemi.android.code_check.R
+import jp.co.yumemi.android.code_check.data.Item
 import jp.co.yumemi.android.code_check.databinding.FragmentSearchRepositoryBinding
 import kotlinx.coroutines.launch
 
@@ -29,7 +32,8 @@ class SearchRepositoryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_repository, container, false)
+        binding = DataBindingUtil.inflate(inflater,
+            R.layout.fragment_search_repository, container, false)
         val application = requireNotNull(this.activity).application
         val viewModelFactory = SearchRepositoryViewModelFactory(application)
         viewModel = ViewModelProvider(this, viewModelFactory)[SearchRepositoryViewModel::class.java]

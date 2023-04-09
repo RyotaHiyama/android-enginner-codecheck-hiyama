@@ -1,4 +1,4 @@
-package jp.co.yumemi.android.code_check
+package jp.co.yumemi.android.code_check.screens.searchuser
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +12,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import jp.co.yumemi.android.code_check.CustomUserAdapter
+import jp.co.yumemi.android.code_check.R
+import jp.co.yumemi.android.code_check.data.User
 import jp.co.yumemi.android.code_check.databinding.FragmentSearchUsersBinding
 import kotlinx.coroutines.launch
 
