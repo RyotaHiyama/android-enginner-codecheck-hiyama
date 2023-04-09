@@ -1,9 +1,16 @@
 <resources>
     <string name="app_name">Android Engineer CodeCheck</string>
     <string name="searchInputText_hint">GitHub のリポジトリを検索できるよー</string>
+    <string name="searchUsersInputText_hint">GitHub のアカウントを検索できるよー</string>
+    <string name="goUserSearch">ユーザー検索モードへ</string>
+    <string name="goRepositorySearch">リポジトリ検索モードへ</string>
     <string name="written_language">Written in %s</string>
     <string name="count_stars">%d stars</string>
     <string name="count_watchers">%d watchers</string>
     <string name="count_forks">%d forks</string>
     <string name="open_issues">%d open issues</string>
+    <string name="search">検索</string>
+    <string name="public_repo">%s public repos</string>
+    <string name="followers">%s followers</string>
+    <string name="following">%s following</string>
 </resources>

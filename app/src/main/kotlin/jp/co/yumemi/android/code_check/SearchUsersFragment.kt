@@ -1,6 +1,3 @@
-/*
- * Copyright © 2021 YUMEMI Inc. All rights reserved.
- */
 package jp.co.yumemi.android.code_check
 
 import android.os.Bundle
@@ -13,26 +10,25 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.*
-import jp.co.yumemi.android.code_check.databinding.FragmentSearchRepositoryBinding
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import jp.co.yumemi.android.code_check.databinding.FragmentSearchUsersBinding
 import kotlinx.coroutines.launch
 
 /**
-* repositoryを検索する画面
+ * userを検索する画面
  */
-class SearchRepositoryFragment : Fragment() {
-    private var binding: FragmentSearchRepositoryBinding? = null
-    private lateinit var viewModel: SearchRepositoryViewModel
+class SearchUsersFragment : Fragment() {
+    private var binding: FragmentSearchUsersBinding? = null
+    private lateinit var viewModel: SearchUsersViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_repository, container, false)
-        val application = requireNotNull(this.activity).application
-        val viewModelFactory = SearchRepositoryViewModelFactory(application)
-        viewModel = ViewModelProvider(this, viewModelFactory)[SearchRepositoryViewModel::class.java]
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_users, container, false)
+        viewModel = ViewModelProvider(this)[SearchUsersViewModel::class.java]
         binding?.viewModel = viewModel
         binding?.lifecycleOwner = this
         return binding!!.root
@@ -43,19 +39,18 @@ class SearchRepositoryFragment : Fragment() {
 
         val layoutManager = LinearLayoutManager(requireContext())
         val dividerItemDecoration = DividerItemDecoration(requireContext(), layoutManager.orientation)
-        val adapter = CustomAdapter(object : CustomAdapter.OnItemClickListener {
-            override fun itemClick(item: Item) {
-                gotoRepositoryFragment(item)
+        val adapter = CustomUserAdapter(object : CustomUserAdapter.OnItemClickListener {
+            override fun itemClick(user: User) {
+                gotoUserInfoFragment(user)
             }
         })
 
-        // 検索ボタンを押した時、入力された文字列を使って検索する
         binding?.searchButton?.setOnClickListener {
             val editText = binding?.searchInputText?.text.toString()
             if (editText != "") {
                 viewModel.viewModelScope.launch{
                     try {
-                        viewModel.searchResults(editText)
+                        viewModel.searchUsesResults(editText)
                     } catch (e: Exception){
                         Toast.makeText(activity, "検索中に予期せぬエラーが発生しました。やり直してください。", Toast.LENGTH_SHORT).show()
                     }
@@ -63,18 +58,18 @@ class SearchRepositoryFragment : Fragment() {
             }
         }
 
-        // 検索結果を一覧表示
+
         viewModel.itemLive.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
 
-        // アカウント検索画面へ遷移
-        viewModel.navigateToFragmentSearchUsers.observe(viewLifecycleOwner) {
+        // リポジトリ検索画面へ遷移
+        viewModel.navigateToFragmentSearchRepository.observe(viewLifecycleOwner) {
             if (it) {
                 val action =
-                    SearchRepositoryFragmentDirections.actionSearchRepositoryFragmentToSearchUsersFragment()
+                    SearchUsersFragmentDirections.actionSearchUsersFragmentToSearchRepositoryFragment()
                 findNavController().navigate(action)
-                viewModel.navigateToFragmentSearchUsersComplete()
+                viewModel.navigateToFragmentSearchRepositoryComplete()
             }
         }
 
@@ -86,17 +81,17 @@ class SearchRepositoryFragment : Fragment() {
         }
     }
 
-    // RepositoryInfoFragmentへ遷移
-    fun gotoRepositoryFragment(item: Item) {
+    // UserInfoFragmentへ遷移
+    fun gotoUserInfoFragment(user: User) {
         val action =
-            SearchRepositoryFragmentDirections.actionRepositoriesFragmentToRepositoryFragment(item = item)
+            SearchUsersFragmentDirections.actionSearchUsersFragmentToUserInfoFragment(user = user)
         findNavController().navigate(action)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         viewModel.itemLive.removeObservers(viewLifecycleOwner)
-        viewModel.navigateToFragmentSearchUsers.removeObservers(viewLifecycleOwner)
+        viewModel.navigateToFragmentSearchRepository.removeObservers(viewLifecycleOwner)
         binding = null
     }
 }

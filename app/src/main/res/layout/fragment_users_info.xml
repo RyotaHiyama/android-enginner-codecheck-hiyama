@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="jp.co.yumemi.android.code_check.UserInfoViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,25 +19,25 @@
             android:id="@+id/ownerIconView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="16dp"
+            android:layout_margin="16dp"
             android:contentDescription="@null"
             tools:src="@drawable/jetbrains"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="@id/centerGuid"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintWidth_max="200dp" />
+            app:layout_constraintWidth_max="240dp" />
 
         <TextView
             android:id="@+id/nameView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            tools:text="JetBrains/kotlin"
+            android:text="@{viewModel.name}"
+            tools:text="Name"
             android:textColor="@color/textColor"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@id/centerGuid"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ownerIconView" />
 
@@ -45,73 +49,64 @@
             app:layout_constraintGuide_percent="0.5" />
 
         <TextView
-            android:id="@+id/languageView"
+            android:id="@+id/twitterName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="8dp"
-            tools:text="Written in Kotlin"
+            android:text="@{viewModel.twitterName}"
+            tools:text="Twitter Name"
+            android:textAlignment="textEnd"
             android:textColor="@color/textColor"
             android:textSize="14sp"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nameView"
             app:layout_constraintStart_toStartOf="@id/centerGuid"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
-            android:id="@+id/starsView"
+            android:id="@+id/publicRepos"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="8dp"
-            tools:text="38530 stars"
+            android:text="@{@string/public_repo(viewModel.publicRepos)}"
+            tools:text="6556 public repos"
             android:textAlignment="textEnd"
             android:textColor="@color/textColor"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/centerGuid"
-            app:layout_constraintTop_toBottomOf="@id/languageView" />
+            app:layout_constraintTop_toBottomOf="@id/twitterName" />
 
         <TextView
-            android:id="@+id/watchersView"
+            android:id="@+id/followersView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="8dp"
-            tools:text="38530 watchers"
+            android:text="@{@string/followers(viewModel.followers)}"
+            tools:text="38530 followers"
             android:textAlignment="textEnd"
             android:textColor="@color/textColor"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/centerGuid"
-            app:layout_constraintTop_toBottomOf="@id/starsView" />
+            app:layout_constraintTop_toBottomOf="@id/publicRepos" />
 
         <TextView
-            android:id="@+id/forksView"
+            android:id="@+id/followingView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="8dp"
-            tools:text="4675 forks"
+            android:text="@{@string/following(viewModel.following)}"
+            tools:text="4675 following"
             android:textAlignment="textEnd"
             android:textColor="@color/textColor"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="@id/centerGuid"
-            app:layout_constraintTop_toBottomOf="@id/watchersView" />
-
-        <TextView
-            android:id="@+id/openIssuesView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            tools:text="131 open issues"
-            android:textAlignment="textEnd"
-            android:textColor="@color/textColor"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/centerGuid"
-            app:layout_constraintTop_toBottomOf="@id/forksView" />
+            app:layout_constraintTop_toBottomOf="@id/followersView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

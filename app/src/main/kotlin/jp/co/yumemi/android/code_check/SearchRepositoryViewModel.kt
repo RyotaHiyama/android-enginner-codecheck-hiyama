@@ -5,6 +5,8 @@ package jp.co.yumemi.android.code_check
 
 import android.app.Application
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.ktor.client.call.*
 import jp.co.yumemi.android.code_check.TopActivity.Companion.lastSearchDate
@@ -22,9 +24,23 @@ class SearchRepositoryViewModel(
 
     private val repository = Repository()
 
+    val itemLive = MutableLiveData<List<Item>>()
+
+    // アカウント検索画面へ遷移するための変数 trueで遷移、選移完了後false
+    private val _navigateToFragmentSearchUsers = MutableLiveData<Boolean>()
+    val navigateToFragmentSearchUsers: LiveData<Boolean>
+        get() = _navigateToFragmentSearchUsers
+
+    fun goUsersSearchButtonClick() {
+        _navigateToFragmentSearchUsers.value = true
+    }
+
+    fun navigateToFragmentSearchUsersComplete() {
+        _navigateToFragmentSearchUsers.value = false
+    }
 
     // 検索結果
-    suspend fun searchResults(inputText: String): List<Item> = withContext(Dispatchers.IO) {
+    suspend fun searchResults(inputText: String) = withContext(Dispatchers.IO) {
         val items = mutableListOf<Item>()
         try {
             val response = repository.search(inputText)
@@ -57,12 +73,12 @@ class SearchRepositoryViewModel(
                             openIssuesCount = openIssuesCount
                         )
                     )
+                    itemLive.postValue(items)
                 }
             }
             lastSearchDate = Date()
         } catch (e: Exception) {
             throw Exception("Error in searchResults(): ${e.message}")
         }
-        return@withContext items.toList()
     }
 }
