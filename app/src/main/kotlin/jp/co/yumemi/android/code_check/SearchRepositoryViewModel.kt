@@ -5,6 +5,7 @@ package jp.co.yumemi.android.code_check
 
 import android.app.Application
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.ktor.client.call.*
@@ -24,6 +25,19 @@ class SearchRepositoryViewModel(
     private val repository = Repository()
 
     val itemLive = MutableLiveData<List<Item>>()
+
+    // アカウント検索画面へ遷移するための変数 trueで遷移、選移完了後false
+    private val _navigateToFragmentSearchUsers = MutableLiveData<Boolean>()
+    val navigateToFragmentSearchUsers: LiveData<Boolean>
+        get() = _navigateToFragmentSearchUsers
+
+    fun goUsersSearchButtonClick() {
+        _navigateToFragmentSearchUsers.value = true
+    }
+
+    fun navigateToFragmentSearchUsersComplete() {
+        _navigateToFragmentSearchUsers.value = false
+    }
 
     // 検索結果
     suspend fun searchResults(inputText: String) = withContext(Dispatchers.IO) {

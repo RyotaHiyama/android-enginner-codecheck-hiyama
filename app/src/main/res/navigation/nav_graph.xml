@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_repositoriesFragment_to_repositoryFragment"
             app:destination="@id/repositoryInfoFragment" />
+        <action
+            android:id="@+id/action_searchRepositoryFragment_to_searchUsersFragment"
+            app:destination="@id/searchUsersFragment" />
     </fragment>
 
     <fragment
@@ -24,5 +27,12 @@
             android:name="item"
             app:argType="jp.co.yumemi.android.code_check.Item" />
     </fragment>
-
+    <fragment
+        android:id="@+id/searchUsersFragment"
+        android:name="jp.co.yumemi.android.code_check.SearchUsersFragment"
+        android:label="SearchUsersFragment" >
+        <action
+            android:id="@+id/action_searchUsersFragment_to_searchRepositoryFragment"
+            app:destination="@id/searchRepositoryFragment" />
+    </fragment>
 </navigation>
