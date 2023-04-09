@@ -23,22 +23,22 @@ import kotlinx.coroutines.launch
  */
 class SearchRepositoryFragment : Fragment() {
     private lateinit var binding: FragmentSearchRepositoryBinding
+    private lateinit var viewModel: SearchRepositoryViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val application = requireNotNull(this.activity).application
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_repository, container, false)
+        val viewModelFactory = SearchRepositoryViewModelFactory(application)
+        viewModel = ViewModelProvider(this, viewModelFactory)[SearchRepositoryViewModel::class.java]
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val application = requireNotNull(this.activity).application
-        val viewModelFactory = SearchRepositoryViewModelFactory(application)
-        val viewModel = ViewModelProvider(this, viewModelFactory)[SearchRepositoryViewModel::class.java]
 
         val layoutManager = LinearLayoutManager(requireContext())
         val dividerItemDecoration = DividerItemDecoration(requireContext(), layoutManager.orientation)
