@@ -15,7 +15,7 @@
 - IDE：Android Studio Electric Eel | 2022.1.1 Patch 1
 - Kotlin：1.5.31
 - Java：11
-- Gradle：7.0.1
+- Gradle：7.0.2
 - minSdk：23
 - targetSdk：31
 
