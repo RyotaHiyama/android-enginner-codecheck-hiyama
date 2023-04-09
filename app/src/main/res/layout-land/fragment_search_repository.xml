@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="jp.co.yumemi.android.code_check.SearchRepositoryViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -54,13 +58,23 @@
         </com.google.android.material.card.MaterialCardView>
 
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/search_button"
             android:text="@string/search"
             app:layout_constraintTop_toBottomOf="@id/searchBar"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toLeftOf="@id/goUserSearchButton"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/goUserSearchButton"
+            android:text="@string/goUserSearch"
+            android:onClick="@{() -> viewModel.goUsersSearchButtonClick()}"
+            app:layout_constraintLeft_toRightOf="@id/search_button"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searchBar"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"

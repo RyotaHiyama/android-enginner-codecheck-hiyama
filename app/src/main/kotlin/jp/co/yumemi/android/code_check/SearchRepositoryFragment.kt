@@ -29,11 +29,12 @@ class SearchRepositoryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val application = requireNotNull(this.activity).application
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_repository, container, false)
+        val application = requireNotNull(this.activity).application
         val viewModelFactory = SearchRepositoryViewModelFactory(application)
         viewModel = ViewModelProvider(this, viewModelFactory)[SearchRepositoryViewModel::class.java]
         binding.viewModel = viewModel
+        binding.lifecycleOwner = this
         return binding.root
     }
 
@@ -67,6 +68,16 @@ class SearchRepositoryFragment : Fragment() {
             adapter.submitList(it)
         }
 
+        // アカウント検索画面へ遷移
+        viewModel.navigateToFragmentSearchUsers.observe(viewLifecycleOwner) {
+            if (it) {
+                val action =
+                    SearchRepositoryFragmentDirections.actionSearchRepositoryFragmentToSearchUsersFragment()
+                findNavController().navigate(action)
+                viewModel.navigateToFragmentSearchUsersComplete()
+            }
+        }
+
         // recyclerViewにlayoutManager、dividerItemDecoration、adapterを設定
         binding.recyclerView.also {
             it.layoutManager = layoutManager
@@ -75,7 +86,7 @@ class SearchRepositoryFragment : Fragment() {
         }
     }
 
-    // TwoFragmentへ遷移
+    // RepositoryInfoFragmentへ遷移
     fun gotoRepositoryFragment(item: Item) {
         val action =
             SearchRepositoryFragmentDirections.actionRepositoriesFragmentToRepositoryFragment(item = item)
