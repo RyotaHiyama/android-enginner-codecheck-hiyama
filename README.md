@@ -6,7 +6,7 @@
 
 ## アプリ仕様
 
-本アプリは GitHub のリポジトリを検索するアプリです。
+本アプリは GitHub のリポジトリやユーザーを検索するアプリです。
 
 <img src="docs/app.gif" width="320">
 
@@ -19,19 +19,17 @@
 - minSdk：23
 - targetSdk：31
 
-※ ライブラリの利用はオープンソースのものに限ります。
-
 ### 動作
+リポジトリ検索機能
 
 1. 何かしらのキーワードを入力
 2. GitHub API（`search/repositories`）でリポジトリを検索し、結果一覧を概要（リポジトリ名）で表示
 3. 特定の結果を選択したら、該当リポジトリの詳細（リポジトリ名、オーナーアイコン、プロジェクト言語、Star 数、Watcher 数、Fork 数、Issue 数）を表示
 
-## 課題取り組み方法
-
-Issues を確認した上、本プロジェクトを [**Duplicate** してください](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/duplicating-a-repository)（Fork しないようにしてください。必要ならプライベートリポジトリにしても大丈夫です）。今後のコミットは全てご自身のリポジトリで行ってください。
-
-コードチェックの課題 Issue は全て [`課題`](https://github.com/yumemi-inc/android-engineer-codecheck/milestone/1) Milestone がついており、難易度に応じて Label が [`初級`](https://github.com/yumemi-inc/android-engineer-codecheck/issues?q=is%3Aopen+is%3Aissue+label%3A初級+milestone%3A課題)、[`中級`](https://github.com/yumemi-inc/android-engineer-codecheck/issues?q=is%3Aopen+is%3Aissue+label%3A中級+milestone%3A課題+) と [`ボーナス`](https://github.com/yumemi-inc/android-engineer-codecheck/issues?q=is%3Aopen+is%3Aissue+label%3Aボーナス+milestone%3A課題+) に分けられています。課題の必須／選択は下記の表とします。
+ユーザー名検索機能
+1. 何かしらのキーワードを入力
+2. GitHub API（`search/users`）でユーザーを検索し、結果一覧を概要（ユーザー名）で表示
+3. 特定の結果を選択したら、該当ユーザーの詳細（ユーザー名、オーナーアイコン、リポジトリ数、Follower 数、Following 数）GitHub API（`users`）で検索し表示
 
 ## コミットのメッセージ
 コミットメッセージには最初にprefixを書いています。以下はprefix一覧です。
