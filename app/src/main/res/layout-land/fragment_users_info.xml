@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="jp.co.yumemi.android.code_check.UserInfoViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ownerIconView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="16dp"
+            android:contentDescription="@null"
+            tools:src="@drawable/jetbrains"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="@id/centerGuid"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintWidth_max="240dp" />
+
+        <TextView
+            android:id="@+id/nameView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@{viewModel.name}"
+            tools:text="Name"
+            android:textColor="@color/textColor"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@id/centerGuid"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ownerIconView" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/centerGuid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <TextView
+            android:id="@+id/twitterName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@{viewModel.twitterName}"
+            tools:text="Twitter Name"
+            android:textAlignment="textEnd"
+            android:textColor="@color/textColor"
+            android:textSize="14sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="@id/centerGuid"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/publicRepos"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@{@string/public_repo(viewModel.publicRepos)}"
+            tools:text="6556 public repos"
+            android:textAlignment="textEnd"
+            android:textColor="@color/textColor"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/centerGuid"
+            app:layout_constraintTop_toBottomOf="@id/twitterName" />
+
+        <TextView
+            android:id="@+id/followersView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@{@string/followers(viewModel.followers)}"
+            tools:text="38530 followers"
+            android:textAlignment="textEnd"
+            android:textColor="@color/textColor"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/centerGuid"
+            app:layout_constraintTop_toBottomOf="@id/publicRepos" />
+
+        <TextView
+            android:id="@+id/followingView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@{@string/following(viewModel.following)}"
+            tools:text="4675 following"
+            android:textAlignment="textEnd"
+            android:textColor="@color/textColor"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="@id/centerGuid"
+            app:layout_constraintTop_toBottomOf="@id/followersView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
