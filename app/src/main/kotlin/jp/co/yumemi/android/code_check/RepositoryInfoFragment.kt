@@ -18,7 +18,7 @@ import jp.co.yumemi.android.code_check.databinding.FragmentRepositoryInfoBinding
 /**
  * 選択したrepositoryの情報を表示する画面
  */
-class RepositoryInfoFragment : Fragment(R.layout.fragment_repository_info) {
+class RepositoryInfoFragment : Fragment() {
 
     private val args: RepositoryInfoFragmentArgs by navArgs()
 
@@ -30,6 +30,7 @@ class RepositoryInfoFragment : Fragment(R.layout.fragment_repository_info) {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_repository_info, container, false)
+        binding.lifecycleOwner = this
         return binding.root
     }
 
